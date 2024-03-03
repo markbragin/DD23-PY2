@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 BOOKS_DATABASE = [
     {
         "id": 1,
@@ -33,11 +36,15 @@ class Book:
 
 
 class Library:
-    def __init__(self, books: list[Book] = []):
-        self.books = books
+    def __init__(self, books: Optional[list[Book]] = None):
+        self.books = books if books else []
 
     def get_next_book_id(self):
-        return max(self.books, key=lambda b: b.id).id + 1 if self.books else 1
+        # old solution
+        # return max(self.books, key=lambda b: b.id).id + 1 if self.books else 1
+
+        # new solution
+        return self.books[-1].id + 1 if self.books else 1
 
     def get_index_by_book_id(self, book_id: int):
         if not isinstance(book_id, int):
